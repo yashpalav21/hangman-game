@@ -29,10 +29,9 @@ def display_man(wrong_guesses):
     print("+++++++++++++")
 def display_hint(hint):
     print(" ".join(hint))
-
-
-def display_word(answer):
-    pass
+  
+def display_answer(answer):
+    print(" ".join(answer))
 
 def main():
    answer = random.choice(words)
@@ -43,21 +42,14 @@ def main():
 
 
    while is_running:
-         display_man(wrong_guesses)
-         display_hint(hint)
-         display_word(answer)
-         guess = input("guess a letter: ").lower()
-         answer == guess
-         break
-
-         if len(guess) != 1 or not guess.isalpha():
-             print("Please enter a single letter.")
-             continue
+        display_man(wrong_guesses)
+        display_hint(hint)
+        guess = input("guess a letter: ").lower()
          
-         if guess in answer:
-           for i in range(len(answer)):
-             if answer[i] == guess:
-               hint[i] = guess
-               break
+        if guess in answer:
+            for i in range(len(answer)):
+                if answer[i] == guess:
+                    hint[i] = guess
+                
 if __name__ == "__main__":
     main()
