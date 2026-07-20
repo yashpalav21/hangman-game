@@ -1,5 +1,5 @@
 import random
-words = ("apple", "banana", "cherry", "lemon", "mango")
+from wordslist import words
 #dictionary
 hangman_art = {0: ("   "
                    "   ",
@@ -35,7 +35,7 @@ def display_answer(answer):
 
 def main():
    answer = random.choice(words)
-   hint = "_" * len(answer)
+   hint = ["_"] * len(answer)
    wrong_guesses = 0
    guessed_letters = set()
    is_running = True
@@ -44,12 +44,37 @@ def main():
    while is_running:
         display_man(wrong_guesses)
         display_hint(hint)
-        guess = input("guess a letter: ").lower()
-         
+        guess = input("enter a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Invalid input")
+            continue 
+
+        if guess in guessed_letters:
+            print(f"{guess} is already guessed")
+
+        guessed_letters.add (guess)    
+
         if guess in answer:
             for i in range(len(answer)):
                 if answer[i] == guess:
                     hint[i] = guess
+        else:
+            wrong_guesses += 1
+        
+        if "_" not in hint:
+            display_man(wrong_guesses)
+            display_answer(answer)
+            print("you win")
+            is_running = False
+        
+        elif wrong_guesses >=len(hangman_art) - 1:
+            display_man(wrong_guesses)
+            display_answer(answer)
+            print("You Lose")
+            is_running = False
+
+                    
                 
 if __name__ == "__main__":
     main()
